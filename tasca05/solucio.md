@@ -1,26 +1,32 @@
-# Solució: T05: Accés Remot. Connexió via SSH (tasca individual)
+# **Solución: T05: Acceso Remoto. Conexión via SSH (tarea individual)**
 
-Primero que todo desde la máquina de ubuntu cambiamos la interficie de red a red NAT:
+## 1- Instalación de SSH
 
-![foto 1](img/foto1.png)
-
-La segunda ponemos en sólo anfitrión:
-
-![foto 2](img/foto2.png)
-
-La máquina windows 11 también tiene que estar en red NAT y en solo anfitrión:
-
-![foto 3](img/foto3.png)
-
-![foto 4](img/foto4.png)
-
-Después entramos al netplan y editamos, ponemos las dos interficies en "true":
+### El primer paso es la instalación del servicio SSH que lo haremos con la siguiente comanda:
 
 ``` bash
-sudo nano /etc/netplan/50-cloud-init.yaml
+sudo apt install openssh-server
+```
+<img src="img/1.png">
+
+### Seguidamente haremos  para habilitar el sistema de SSH: 
+
+``` bash
+systemctl enbale ssh
 ```
 
-![foto 5](img/foto5.png)
+### Y para finalizar la instalación del sistema de SSH haremos la siguiente comanda: 
+
+``` bash
+systemctl status ssh
+```
+
+
+## 2- Configuración del Netplan
+
+### Tendremos dos interfícies de red en ambas máquinas, Red NAT y Adaptador Puente
+
+<img src="img/3.1.png">
 
 Después aplicamos los cambios:
 
@@ -28,267 +34,289 @@ Después aplicamos los cambios:
 sudo netplan apply
 ```
 
-**Ahora si podemos comenzar con las actividades.**
 
-### Instala el servicio ssh en el Ubuntu 
+## 3. Connexió SSH inicial
 
-Instalamos el servicio ssh desde ubuntu:
+Un cop completades les passes anteriors, ja ens podem connectar a la màquina Ubuntu des de la terminal de Windows amb:
 
-``` bash
-sudo apt install ssh
-```
-
-habilitamos el servicio ssh:
-
-``` bash
-sudo systemctl enable ssh 
-```
-
-![foto 6](img/foto6.png)
-
-Miramos que el servicio ssh esté activo:
-
-``` bash
-sudo systemctl status ssh 
-```
-
-![foto 7](img/foto7.png)
-
-### Documenta la primera conexión dónde pregunta por la validez del certififcado
-
-Hacemos ip a en la máquina Ubuntu para ver la ip del adaptador de solo anfitrión:
-
-``` bash
-ip a
-```
-
-![foto 8](img/foto8.png)
-
-Ahora si desde la máquina Windows en powershell o terminal comprobamos la conexión haciendo ssh + nombre de la máquina Ubuntu + ip de solo anfitrión de la máquina Ubuntu .Nos pedirá permisos, osea la contraseña y unos cuántos “yes”
-
-``` bash
+```bash
 ssh usuari@192.168.56.102
 ```
 
-![foto 9](img/foto9.png)
+Ens apareix un missatge de seguretat ja que és la primera vegada que ens connectem, i ens demana confirmar l'autenticitat de la clau pública.  
 
-Después de poner la contraseña ya nos conectaremos remotamente via ssh
+<img src="img/5.png">
 
-![foto 10](img/foto10.png)
+L’acceptem i ens connectem correctament, apareixent el terminal de la màquina Ubuntu.
 
-Para ver el nombre y asegurarnos que es esa la máquina Ubuntu a la que nos qeriamos conectarnos hacemos un hostname y nos tendria que salir el nombre de nuestra máquina Windows en mi caso se llama "usuari"
+<img src="img/6.png">
 
-``` bash
-hostname
+---
+
+## 3. Configuració del servidor SSH a Ubuntu
+
+Un cop dins de la màquina a través de SSH, podem editar l’arxiu de configuració:
+
+```bash
+sudo nano /etc/ssh/sshd_config
 ```
+<img src="img/13.png">
 
-![foto 11](img/foto11.png)
+Podem:
+- Permetre o no connexions de root.
+- Canviar el port de connexió (per defecte 22).
+- Fer una llista d’usuaris autoritzats per connexió remota.
 
-### Habilita el usuario root en Ubuntu (Se hace poniendole una sontraseña)
+Per deshabilitar l'accés SSH per a l'usuari root, modifiquem l’arxiu `/etc/ssh/sshd_config` i canviem les següents línies.
 
-Ahora habilitamos el usuario root y lo hacemos poniendo una contraseña. Hacemos sudo passwd root y nos pedirá la contraseña y le asignaremos una contraseña la cuál le he puesto “usuari”
+<img src="img/67.png">
 
-``` bash
+Canviar la contrasenya del root:
+
+```bash
 sudo passwd root
 ```
 
-![foto 12](img/foto12.png)
+<img src="img/68.png">
 
-### Muestra la configuración relativa a los usuarios en el archivo sshd_config: Habilita solo un usuario para poder acceder remotamente y que los otros usuarios no puedan conertarse.
+Si intentem fer SSH com a root, no ens deixarà.  
 
-Desde la máquina Ubuntu entramos al siguiente archivo:
+<img src="img/14.png">
 
-``` bash
+Però podem iniciar sessió de manera local sense problemes.
+
+<img src="img/69.png">
+
+---
+
+## 4. Permetre connexió només a usuaris autoritzats
+
+Creem un nou usuari `usuari23`:
+
+```bash
+sudo useradd -m -s /bin/bash usuari23
+```
+
+<img src="img/70.png">
+
+Assignem una contrasenya:
+
+```bash
+sudo passwd usuari23
+```
+
+Afegim l'usuari autoritzat a l’arxiu SSH:
+
+```bash
 sudo nano /etc/ssh/sshd_config
 ```
 
-Dentro del archivo añadimos la última línea que se muestra a continuación:
+Afegim la línia:
 
-![foto 13](img/foto13.png)
-
-![foto 14](img/foto14.png)
-
-### Comprueba cómo el usuario root si puede hacer login en local pero no puede inicar sesión remota vía ssh
-
-Desde la máquina Ubuntu hacemos login de manera local con el usuario root:
-
-``` bash
-su - root
+```text
+AllowUsers usuari
 ```
 
-![foto 15](img/foto15.png)
+<img src="img/15.png">
 
-Después desde la máquina Windows intentaremos hacer ssh con el usuario root y veremos qué nos dice que el acceso es denegado. Se hace poniendo ssh + el nombre de usuario que en este caso el root + la ip de la máquina Ubuntu
+Reiniciem el servei per aplicar els canvis:
 
-``` bash
-ssh root@192.168.56.102
+```bash
+sudo systemctl restart ssh
 ```
 
-![foto 16](img/foto16.png)
+---
 
-### Documenta y configura ssh para acceder con certificado cliente en lugar de usuario y contraseña
+## 5. Connexió SSH sense contrasenya amb clau pública
 
-En la máquina Windows generamos algunos códigos RSA con la comanda siguiente: 
+Al client Windows generem la clau:
 
-``` bash
-ssh-keygen -t rsa
+```bash
+ssh-keygen -t ed25519
 ```
 
-![foto 17](img/foto17.png)
+<img src="img/18.png">
 
-Ahora lo que vamos hacer es mirar que tengamos los archivos anteriores que necesitamos, lo cuál tenemos que copiar en nuestra máquina Ubuntu es el que acaba en .pub y lo vamos a copiar con la comanda scp
+La clau es guarda per defecte a:
 
-``` bash
-ls .\.ssh\
+```
+C:\Users\usuari\.ssh
 ```
 
-![foto 18](img/foto18.png)
+<img src="img/19.png">
 
-Con la comanda scp lo copiamos a la máquina Ubuntu:
+---
 
-``` bash
-scp .\.ssh\id_rsa.pub usuari@192.168.56.102:/home/usuari
+Copiem la clau pública al servidor Ubuntu:
+
+```bash
+scp id_ed25519.pub usuari@192.168.56.200:/home/usuari
 ```
 
-![foto 19](img/foto19.png)
+<img src="img/20.png">
 
-En nuestra máquina ubuntu creamos el siguiente archivo, tiene que estar dentro de la carpeta ssh. Lo creamos con la siguiente comanda:
+Pel que si ens dirigim al servidor, podem veure que a la carpeta **/home/usuari** s’ha passat l’arxiu correctament.
 
-``` bash
-touch .ssh/authorized_keys
+<img src="img/21.png">
+
+Ens dirigim a la carpeta **.ssh** i podem veure que hi ha un arxiu anomenat **authorized\_keys**.
+
+<img src="img/22.png">
+
+Al servidor, afegim la clau a l'arxiu `authorized_keys`:
+
+```bash
+cat /home/usuari/id_ed25519.pub >> .ssh/authorized_keys
 ```
 
-Ahora copiamos la clave id_rsa.pub dentro del archivo que creamos en la comanda anterior.
+<img src="img/23.png">
 
+Ara podem fer SSH sense contrasenya:
 
-``` bash
-cat id_rsa.pub >> .ssh/authorized_keys
+```bash
+ssh usuari@192.168.56.200
 ```
 
-Ahora desde la máquina Windows hacemos ssh + nombre de la máquina Ubuntu en mi caso es usuari + ip para comprobar que podemos conectarnos a la máquina ubuntu sin que nos pida la contraseña.
+<img src="img/24.png">
 
-``` bash
-ssh usuari@192.168.56.102
+---
+
+## 6. Millorar la seguretat del servidor
+
+Deshabilitar autenticació per contrasenya:
+
+```bash
+sudo nano /etc/ssh/sshd_config
 ```
 
-![foto 20](img/foto20.png)
+Modificar:
 
-### Configura en el equipo Windows 11 el servidor OpenSSH
-
-Entramos a la configuración de Windows 11 y entramos a sistemas.
-
-![foto 21](img/foto21.png)
-
-Dentro de sistemas tenemos que entrar a “ver características” y permitimos que la aplicación haga cambios en el dispositivo.
-
-![foto 22](img/foto22.png)
-
-![foto 23](img/foto23.png)
-
-Una vez dentro de la aplicación, IMPORTANTE darle a “ver las características disponible”
-
-![foto 24](img/foto24.png)
-
-Buscamos “OpenSSH”, marcamos la casilla y le damos a agregar.
-
-![foto 25](img/foto25.png)
-
-![foto 26](img/foto26.png)
-
-Una vez agregado seguimos con el siguiente punto
-
-### Conectate remotamente desde el equipo linux (en mi caso es Ubuntu)
-
-Para poder conectarnos remotamente primero tenemos que hacer lo siguiente:
-
-- Primero apagamos el Firewall en windows 11, buscamos “Firewall y protección de red” entramos y seguidamente entramos a “Red pública” y la desactivamos.
-
-![foto 27](img/foto27.png)
-
-![foto 28](img/foto28.png)
-
-![foto 29](img/foto29.png)
-
-- Seguidamente ejecutamos el powershell como administrador 
-
-![foto 30](img/foto30.png)
-
-- Una vez iniciado el powershell como administrador encendemos en servicio de server SSH
-
-``` bash
-Start-Service ssh
+```
+PasswordAuthentication no
 ```
 
-![foto 31](img/foto31.png)
+<img src="img/25.png">
 
-- Hacemos que cada vez que iniciemos la máquina se active el servicio.
+---
 
-``` bash
-Set-Service -Name sshd -StartupType "Automatic"
+## 7. Configurar Windows com a servidor SSH
+
+### 7.1 Mètode gràfic
+
+- Obrir **Características opcionales**
+<img src="img/26.png">
+
+- Fer clic a **Ver características**
+<img src="img/27.png">
+
+- Seleccionar **Servidor OpenSSH** i afegir-lo
+<img src="img/28.png">
+
+### 7.2 Mètode PowerShell
+
+Comprovar disponibilitat:
+
+```powershell
+Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH*'
 ```
 
-![foto 32](img/foto32.png)
+<img src="img/29.png">
 
-- Por último hacemos ipconfig desde el powershell de la máquina Windows para ver la ip del adaptador de solo anfitrión y que después con esa ip nos conectaremos desde la máquina Ubuntu.
+Instal·lar:
 
-``` bash
-ipconfig
+```powershell
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 ```
 
-![foto 33](img/foto33.png)
+<img src="img/30.png">
 
-**Ahora si que hacemos el ejercicio que es conectarnos remotamente desde la máquina Linux que en mi caso es Ubuntu**
+Habilitar servei i inici automàtic:
 
-Desde la máquina Ubuntu nos conectamos a la máquina Windows con la ip de la interfície de solo anfitrión de la máquina Windows
-
-- Primero hacemos un ping desde la máquina Ubuntu para comprobar que se pueden ver entre las dos máquinas. El ping sería ping + ip de solo anfitrión de la máquina Windows.
-
-``` bash
-ping 192.168.56.103
+```powershell
+Start-Service sshd
+Set-Service -Name sshd -StartupType 'Automatic'
 ```
 
-![foto 34](img/foto34.png)
+<img src="img/31.png">
 
-- Una vez comprobado que las dos máquinas se ven ahora si que nos conectamos desde la máquina Ubuntu a la máquina Windows. Lo vamos hacer haciendo ssh + el nombre de la máquina windows + la ip de solo anfitrión.
+Una vegada amb això fet, podrem connectar-nos des de la màquina Linux al Windows a través de ssh, però per defecte Windows bloqueja les connexions entrants així que deshabilitem el firewall de Microsoft Defender per a permetre la connexió.
 
-``` bash
-ssh usuari@192.168.56.103
+Una vegada amb el firewall desactivat, ja ens podem connectar satisfactòriament des del Linux.
+
+```bash
+ssh usuari@192.168.56.201
 ```
 
-![foto 35](img/foto35.png)
+<img src="img/32.png">
 
-### Crea un túnel ssh (Proxy SOCKES) como el de la guía
+I podem veure com estem a dins del sistema
 
-Desde la máquina Windows ejecutamos la siguiente comanda para crear el túnel
+<img src="img/33.png">
 
-``` bash
-ssh -D 9876 usuari@192.168.56.102 
+---
+
+## 8. Creació d’un túnel SSH
+
+Afegim una nova interfície NAT als dos equips.  
+
+Al Linux, modifiquem l’arxiu `/etc/netplan/50-cloud-init.yaml` de manera que afegim la nova interfície perquè se li assigni una IP a través de DHCP:
+
+```bash
+sudo nano /etc/netplan/50-cloud-init.yaml
 ```
 
-![foto 36](img/foto36.png)
+<img src="img/34.png">
 
-![foto 37](img/foto37.png)
+```bash
+sudo netplan apply
+```
 
-**Configuración del túnel Proxy en windows:**
+Comprovem IP assignada:
 
-Abrimos el panel de control - red y internet - opciones de internet - Conexiones - Configuración LAN
+```bash
+ip a
+```
 
-![foto 38](img/foto38.png)
+<img src="img/35.png">
 
-![foto 39](img/foto39.png)
+I podem veure que se li ha assignat l’IP **10.0.2.6** i serà la IP que haurà d’utilitzar el client Windows per a fer la connexió.
 
-![foto 40](img/foto40.png)
+Des del client Windows, creem un túnel dinàmic al port 9876:
 
-Después habilitamos el servidor Proxy con la IP local de la máquina Ubuntu y puerto 9876
+```bash
+ssh -D 9876 usuari@10.0.2.6
+```
 
-![foto 41](img/foto41.png)
+<img src="img/36.png">
 
-![foto 42](img/foto42.png)
+---
 
-Por último hacemos la validación del túnel con wireshark. Para eso nos descargamos wireshark si es que no lo tenemos descargado
+## 9. Configuració del client per redirigir tràfic
 
-Abrimos wireshark y ya nos tendría que salir:
+1. Obrir **Propiedades de Internet → Configuración de LAN**
 
-![foto 43](img/foto43.png)
+<img src="img/37.png">
+
+2. Clic a **Opciones avanzadas**
+   
+<img src="img/38.png">
+
+3. Afegir port del túnel (9876)
+
+<img src="img/39.png">
+
+---
+
+## 10. Comprovació del tràfic amb Wireshark
+
+Per a comprovar que el tràfic passa pel túnel haurem d'instal·lar l'eina Wireshark.
+
+- **Sense túnel:** tràfic normal, DNS directe, ports estàndard  
+
+<img src="img/40.png">
+
+- **Amb túnel:** tot el tràfic passa xifrat per SSH
+
+<img src="img/41.png">
 
 [Torna a l'enunciat](README.md)
