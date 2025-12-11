@@ -69,5 +69,5 @@ Luego se introduce el usuario y la contraseña de Zorin y la conexión se establ
 ---
 
 
-- [**Tornar al readme**](README.md)
+- [**Tornar al readme**](guia.md)
 - [**Tornar el projecte**](../README.md)
