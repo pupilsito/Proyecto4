@@ -1,85 +1,73 @@
-# T06: Accés remot. Escriptori remot (RDP) (tasca individual)
+# T06: Acceso remoto. Escritorio remoto (RDP) 
 
 ---
 
-## Xarxa
+## Red
 
-Perquè les dues màquines virtuals es puguin veure i tinguin connexió a internet, he configurat la xarxa en mode NAT.
+Para que las dos máquinas virtuales puedan verse y tengan conexión a internet, he configurado la red en modo NAT.
 
-En el meu cas utilitzo **xarxa NAT** perquè les màquines tinguin connexió i es puguin comunicar entre elles sense configurar res complex. Aquesta configuració permet que tant Windows com Zorin tinguin internet i al mateix temps es detectin dins la mateixa xarxa virtual.
+En mi caso utilizo **red NAT** para que las máquinas tengan conexión y se puedan comunicar entre ellas sin configurar nada complejo. Esta configuración permite que tanto Windows como Zorin tengan internet y al mismo tiempo se detecten en la misma red virtual.
 
 ![img](img/1.png)
 
 ---
 
-## Configuració a Windows
+## Configuración a Windows
 
-A Windows cal activar l’opció d’escriptori remot perquè un altre dispositiu s’hi pugui connectar. Aquesta opció es troba a la configuració del sistema dins l’apartat d’escriptori remot.
+En Windows es necesario activar la opción de escritorio remoto para que otro dispositivo pueda conectarse. Esta opción se encuentra en la configuración del sistema en el apartado de escritorio remoto.
 
 ![img](img/2.png)
 
-Un cop activat, també s’ha d’afegir l’usuari que tindrà permís per accedir remotament.
+Una vez activado, también debe añadirse el usuario que tendrá permiso para acceder remotamente.
 
-En el meu cas he afegit un usuari concret, però cada persona haurà d’utilitzar el seu propi usuari segons la configuració del seu sistema.
+En mi caso he añadido un usuario concreto, pero cada persona tendrá que utilizar su propio usuario según la configuración de su sistema.
 
 ![img](img/3.png)
 
-Perquè la connexió des de Zorin funcionés correctament, en el meu cas he hagut de desactivar el firewall de Windows. 
-
+Para que la conexión desde Zorin funcionara correctamente, en mi caso he tenido que desactivar el firewall de Windows.
 ---
 
-## Configuració a Zorin OS
+## Configuración a Zorin OS
 
-A Zorin he activat la compartició d’escriptori des de la configuració del sistema. També he habilitat el control remot perquè l’altre dispositiu pugui interactuar amb l’escriptori.
+En Zorin he activado la compartición de escritorio desde la configuración del sistema. También he habilitado el control remoto para que el otro dispositivo pueda interactuar con el escritorio.
 
 ![img](img/4.png)
 
-El sistema mostra el nom de l’equip, el port i l’usuari amb el qual es permet l’accés remot. A les captures del repositori es poden veure aquests valors tal com els tinc configurats.
-
+El sistema muestra el nombre del equipo, el puerto y el usuario con el que se permite el acceso remoto. En las capturas del repositorio se pueden ver estos valores tal y como los tengo configurados.
 ---
 
-## Connexió des de Zorin a Windows
+## Conexión de Zorin a Windows
 
-Des de Zorin utilitzo el programa Remmina per establir la connexió remota.
-
+Desde Zorin utilizo el programa Remmina para establecer la conexión remota.
 ![img](img/5.png)
 
-Escribim el nom del dispositiu Windows a la barra de connexió i iniciem la sessió. A continuació introdueixo les credencials de Windows.
+Escribimos el nombre del dispositivo Windows en la barra de conexión e iniciamos la sesión. A continuación introduzco las credenciales de Windows.
 
 ![img](img/7.png)
 ![img](img/6.png)
 
-Després de validar les dades, apareix l’escriptori de Windows dins de Zorin.
+Después de validar los datos, aparece el escritorio de Windows dentro de Zorin.
 
 ![img](img/8.png)
 
 ---
 
-## Connexió des de Windows a Zorin
+## Conexión de Windows a Zorin
 
-També és possible connectar-se en sentit contrari.
+También es posible conectarse en sentido contrario.
 
-Des de Windows s’obre el client d’escriptori remot i s’introdueix el nom del dispositiu Zorin. En el meu cas utilitzo el nom de l’equip tal com apareix a la configuració de Zorin.
+Desde Windows se abre el cliente de escritorio remoto y se introduce el nombre del dispositivo Zorin. En mi caso utilizo el nombre del equipo tal y como aparece en la configuración de Zorin.
 
-![img](img/img12.png)
+![img](img/9.png)
 
-Després s’introdueix l’usuari i la contrasenya de Zorin i la connexió s’estableix.
+Luego se introduce el usuario y la contraseña de Zorin y la conexión se establece.
 
-![img](img/img13.png)
+![img](img/10.png)
 
-![img](img/img14.png)
 
-I ja estaria 👍
 
 ---
 
-## Problemes més comuns
 
-Si la connexió no funciona, el primer que cal comprovar és la configuració de la xarxa. També cal revisar que el tallafocs de Windows estigui desactivat durant la pràctica.
-
-Si Remmina no connecta o la pantalla es queda negra, normalment reiniciar el programa o revisar la configuració del sistema sol solucionar-ho.
-
----
-
-- [**Tornar al readme**](Solucio.md)
+- [**Tornar al readme**](README.md)
 - [**Tornar el projecte**](../README.md)
