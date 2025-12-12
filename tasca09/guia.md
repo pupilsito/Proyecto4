@@ -281,11 +281,11 @@ Para ello, tendremos que modificar el archivo /etc/exports y sustituir la línea
 /srv/nfs/dev_projects 192.168.56.0/24(rw,
 ```
 
-![Configuració de xarxa](img/20.png)
+![Configuració de xarxa](img/17.png)
 
 Una vez hecho esto, si iniciamos sesión como usuario dev01, como tenemos una dirección IP dentro del rango que puede editar archivos en la carpeta, podremos crear archivos.
 
-![Creación de archivos](img/22.png)
+![Creación de archivos](img/20.png)
 
 Cuando cambiamos la IP a ```192.168.56.140```, observamos que no podemos editar los archivos, pero sí podemos ver su contenido. Tendremos que desmontar y volver a montar la unidad.
 
