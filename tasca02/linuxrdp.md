@@ -2,11 +2,11 @@
 
 ### Ara començarem a fer les còpies de seguretat a Linux amb un Ubuntu Server i amb el disc dur addicional de 10 GB.
 
-<img src="img/1.png">
+<img src="imgg/1.png">
 
 ### En entrar a la màquina Ubuntu veiem que ens apareix el segon disc que hem afegit.
 
-<img src="img/2.png">
+<img src="imgg/2.png">
 
 ---
 
@@ -24,11 +24,11 @@ sudo fdisk /dev/sdb
 - ENTER (valors per defecte)  
 - w  (guardar)
 
-<img src="img/3.png">
+<img src="imgg/3.png">
 
 ### I ara podem veure que s’ha creat correctament.
 
-<img src="img/4.png">
+<img src="imgg/4.png">
 
 ---
 
@@ -40,7 +40,7 @@ sudo fdisk /dev/sdb
 sudo mkfs.xfs /dev/sdb1
 ```
 
-<img src="img/5.png">
+<img src="imgg/5.png">
 
 ### Un cop amb el disc dur formatat, creem el punt de muntatge manualment a `/media/backup`.
 
@@ -66,7 +66,7 @@ sudo apt install duplicity
 
 ### Comprovem que s’ha instal·lat correctament:
 
-<img src="img/6.png">
+<img src="imgg/6.png">
 
 ---
 
@@ -81,7 +81,7 @@ sudo useradd -m -s /bin/bash usuari3
 
 ### Comprovem que s’han creat correctament:
 
-<img src="img/7.png">
+<img src="imgg/7.png">
 
 ### Creem contrasenya per a iniciar sessió:
 
@@ -90,7 +90,7 @@ sudo passwd usuari2
 sudo passwd usuari3
 ```
 
-<img src="img/8.png">
+<img src="imgg/8.png">
 
 ---
 
@@ -98,7 +98,7 @@ sudo passwd usuari3
 
 ### Crearem 4 arxius de 10 MB a la carpeta home de l'usuari principal.
 
-<img src="img/9.png">
+<img src="imgg/9.png">
 
 ---
 
@@ -110,11 +110,11 @@ sudo passwd usuari3
 sudo duplicity full /home/ file:///media/backup/
 ```
 
-<img src="img/10.png">
+<img src="imgg/10.png">
 
 ### I podem veure que s’han creat els arxius de la còpia de seguretat a la ubicació que li hem indicat, en aquest cas el disc secundari.
 
-<img src="img/11.png">
+<img src="imgg/11.png">
 
 ---
 
@@ -132,11 +132,11 @@ Fem la restauració:
 sudo duplicity restore file:///media/backup/ /home/usuari
 ```
 
-<img src="img/12.png">
+<img src="imgg/12.png">
 
 ### I podem veure que s'han restaurat correctament.
 
-<img src="img/13.png">
+<img src="imgg/13.png">
 
 ---
 
@@ -144,11 +144,11 @@ sudo duplicity restore file:///media/backup/ /home/usuari
 
 ### Afegim un nou arxiu de 4 MB:
 
-<img src="img/14.png">
+<img src="imgg/14.png">
 
 ### Fem una nova còpia: detecta només 1 fitxer nou i fa una còpia incremental.
 
-<img src="img/15.png">
+<img src="imgg/15.png">
 
 ---
 
@@ -180,7 +180,7 @@ umount /media/backup
 sudo chmod +x fullbackup.sh
 ```
 
-<img src="img/16.png">
+<img src="imgg/16.png">
 
 ---
 
@@ -192,7 +192,7 @@ sudo chmod +x fullbackup.sh
 sudo crontab -e
 ```
 
-<img src="img/17.png">
+<img src="imgg/17.png">
 
 ## 11. Script de còpia automàtica incremental
 
@@ -216,7 +216,7 @@ umount /media/backup
 sudo chmod +x incrementalbackup.sh
 ```
 
-<img src="img/18.png">
+<img src="imgg/18.png">
 
 ## 12. Programació amb CRON
 
@@ -226,4 +226,4 @@ sudo chmod +x incrementalbackup.sh
 sudo crontab -e
 ```
 
-<img src="img/19.png">
+<img src="imgg/19.png">
