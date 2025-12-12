@@ -1,56 +1,56 @@
-# T02: Còpies de Seguretat a Linux amb Duplicity
+# T02: Copias de Seguridad en Linux con Duplicity
 
-### Ara començarem a fer les còpies de seguretat a Linux amb un Ubuntu Server i amb el disc dur addicional de 10 GB.
+### Ahora empezaremos a hacer las copias de seguridad en Linux con un Ubuntu Server y con el disco duro adicional de 10 GB.
 
 <img src="imgg/1.png">
 
-### En entrar a la màquina Ubuntu veiem que ens apareix el segon disc que hem afegit.
+### Al entrar en la máquina Ubuntu vemos que nos aparece el segundo disco que hemos añadido.
 
 <img src="imgg/2.png">
 
 ---
 
-## 1. Creació de la partició
+## 1. Creación de la partición
 
-### Ara haurem de crear una nova partició en el disc.
+### Ahora deberemos crear una nueva partición en el disco.
 
 ```bash
 sudo fdisk /dev/sdb
-```
+````
 
-### Passos:
-- n  (nova partició)  
-- p  (primària)  
-- ENTER (valors per defecte)  
-- w  (guardar)
+### Pasos:
+- n (nueva partición)  
+- p (primaria)  
+- ENTER (valores por defecto)  
+- w (guardar)
 
 <img src="imgg/3.png">
 
-### I ara podem veure que s’ha creat correctament.
+### Y ahora podemos ver que se ha creado correctamente.
 
 <img src="imgg/4.png">
 
 ---
 
-## 2. Format i muntatge
+## 2. Formato y montaje
 
-### I ara li donarem format XFS amb la següent comanda:
+### Y ahora le daremos formato XFS con el siguiente pedido:
 
 ```bash
 sudo mkfs.xfs /dev/sdb1
-```
+````
 
 <img src="imgg/5.png">
 
-### Un cop amb el disc dur formatat, creem el punt de muntatge manualment a `/media/backup`.
+### Una vez con el disco duro formateado, creamos el punto de montaje manualmente en `/media/backup`.
 
-### Creem la carpeta.
+### Creamos la carpeta.
 
 ```bash
 sudo mkdir -p /media/backup
 ```
 
-### I després fem el muntatge manualment.
+### Y después hacemos el montaje manualmente.
 
 ```bash
 sudo mount /dev/sdb1 /media/backup
@@ -58,103 +58,157 @@ sudo mount /dev/sdb1 /media/backup
 
 ---
 
-## 3. Instal·lació de Duplicity
+## 3. Instalación de Duplicity
 
 ```bash
 sudo apt install duplicity
 ```
 
-### Comprovem que s’ha instal·lat correctament:
+### Comprobamos que se ha instalado correctamente:
 
 <img src="imgg/6.png">
 
 ---
 
-## 4. Creació d’usuaris
+## 4. Creación de usuarios
 
-### Crearem un parell d’usuaris amb carpeta personal:
+### Crearemos un par de usuarios con carpeta personal:
 
 ```bash
-sudo useradd -m -s /bin/bash usuari2
-sudo useradd -m -s /bin/bash usuari3
+sudo useradd -m -s /bin/bash usuario2
+sudo useradd -m -s /bin/bash usuario3
 ```
 
-### Comprovem que s’han creat correctament:
+### Creamos contraseña para iniciar sesión:
+
+```bash
+sudo passwd usuario2
+sudo passwd usuario3
+```
 
 <img src="imgg/7.png">
 
-### Creem contrasenya per a iniciar sessió:
+---
 
-```bash
-sudo passwd usuari2
-sudo passwd usuari3
-```
+## 5. Creación de archivos de prueba
+
+### Crearemos 4 archivos de 10 MB en la carpeta hombre del usuario principal.
 
 <img src="imgg/8.png">
 
 ---
 
-## 5. Creació d’arxius de prova
+## 6. Copia completa
 
-### Crearem 4 arxius de 10 MB a la carpeta home de l'usuari principal.
-
-<img src="imgg/9.png">
-
----
-
-## 6. Còpia completa
-
-### Fem la còpia de seguretat de la carpeta /home:
+### Hacemos la copia de seguridad de la carpeta /home:
 
 ```bash
 sudo duplicity full /home/ file:///media/backup/
-```
+````
+
+<img src="imgg/9.png">
+
+### Y podemos ver que se han creado los archivos de la copia de seguridad en la ubicación que le hemos indicado, en este caso el disco secundario.
 
 <img src="imgg/10.png">
 
-### I podem veure que s’han creat els arxius de la còpia de seguretat a la ubicació que li hem indicat, en aquest cas el disc secundari.
+---
+
+## 7. Restauración de datos
+
+### Borramos los archivos de prueba:
+
+```bash
+rm archivo*
+````
+
+Hagamos la restauración:
+
+```bash
+sudo duplicity restore file:///media/backup/ /home/usuario
+````
 
 <img src="imgg/11.png">
 
----
-
-## 7. Restauració de dades
-
-### Esborrem els fitxers de prova:
-
-```bash
-rm arxiu*
-```
-
-Fem la restauració:
-
-```bash
-sudo duplicity restore file:///media/backup/ /home/usuari
-```
+### Y podemos ver que se han restaurado correctamente.
 
 <img src="imgg/12.png">
 
-### I podem veure que s'han restaurat correctament.
+---
+
+## 8. Copia incremental
+
+### Añadimos un nuevo archivo de 4 MB:
 
 <img src="imgg/13.png">
 
----
-
-## 8. Còpia incremental
-
-### Afegim un nou arxiu de 4 MB:
+### Hagamos una nueva copia: detecta sólo 1 archivo nuevo y hace una copia incremental.
 
 <img src="imgg/14.png">
 
-### Fem una nova còpia: detecta només 1 fitxer nou i fa una còpia incremental.
+---
 
-<img src="imgg/15.png">
+## 5. Creación de archivos de prueba
+
+### Crearemos 4 archivos de 10 MB en la carpeta hombre del usuario principal.
+
+<img src="imgg/8.png">
+
+---
+
+## 6. Copia completa
+
+### Hacemos la copia de seguridad de la carpeta /home:
+
+```bash
+sudo duplicity full /home/ file:///media/backup/
+````
+
+<img src="imgg/9.png">
+
+### Y podemos ver que se han creado los archivos de la copia de seguridad en la ubicación que le hemos indicado, en este caso el disco secundario.
+
+<img src="imgg/10.png">
+
+---
+
+## 7. Restauración de datos
+
+### Borramos los archivos de prueba:
+
+```bash
+rm archivo*
+````
+
+Hagamos la restauración:
+
+```bash
+sudo duplicity restore file:///media/backup/ /home/usuario
+````
+
+<img src="imgg/11.png">
+
+### Y podemos ver que se han restaurado correctamente.
+
+<img src="imgg/12.png">
+
+---
+
+## 8. Copia incremental
+
+### Añadimos un nuevo archivo de 4 MB:
+
+<img src="imgg/13.png">
+
+### Hagamos una nueva copia: detecta sólo 1 archivo nuevo y hace una copia incremental.
+
+<img src="img/71.png">
 
 ---
 
 ## 9. Script de còpia automàtica
 
-### Desmuntem la unitat del backup:
+Desmuntem la unitat del backup:
 
 ```bash
 sudo umount /media/backup
@@ -174,29 +228,29 @@ duplicity full /home file:///media/backup/homebackup
 umount /media/backup
 ```
 
-### Donem permisos d’execució:
+Donem permisos d’execució:
 
 ```bash
 sudo chmod +x fullbackup.sh
 ```
 
-<img src="imgg/16.png">
+<img src="img/72.png">
 
 ---
 
 ## 10. Programació amb CRON
 
-### Programem el cron com a root perquè s’executi diumenges a les 23:00.
+Programem el cron com a root perquè s’executi diumenges a les 23:00.
 
 ```bash
 sudo crontab -e
 ```
 
-<img src="imgg/17.png">
+<img src="img/73.png">
 
 ## 11. Script de còpia automàtica incremental
 
-### Creem l’script `incrementalbackup.sh` per a còpies incrementals:
+Creem l’script `incrementalbackup.sh` per a còpies incrementals:
 
 ```bash
 !/bin/bash
@@ -210,20 +264,20 @@ duplicity incremental /home file:///media/backup/homebackup
 umount /media/backup
 ```
 
-### Donem permisos d’execució:
+Donem permisos d’execució:
 
 ```bash
 sudo chmod +x incrementalbackup.sh
 ```
 
-<img src="imgg/18.png">
+<img src="img/74.png">
 
 ## 12. Programació amb CRON
 
-### Programem cron perquè s’executi de dilluns a dissabte a les 23:00:
+Programem cron perquè s’executi de dilluns a dissabte a les 23:00:
 
 ```bash
 sudo crontab -e
 ```
 
-<img src="imgg/19.png">
+<img src="img/75.png">
