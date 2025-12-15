@@ -59,3 +59,104 @@ Una vegada dins de l'aplicació, ja podem començar a donar assistència remota 
 <img src="img/7.png">
 
 ---
+
+## 2. Proceso de Asistencia Remota
+
+Para poder dar asistencia remota a un usuario final, primero debemos pedirle que descargue y ejecute el módulo `TeamViewer QuickSupport` desde la página oficial de TeamViewer. 
+
+<img src="img/8.png">
+
+---
+
+## 2.1 Conexión Remota a través del ID y Contraseña
+
+Una vez que el usuario final ha ejecutado el módulo, le pedimos que nos facilite el ID y la contraseña que aparecen en la ventana de QuickSupport. Y los introducimos en nuestra aplicación de TeamViewer en la sección de `Soporte remoto`.
+
+<img src="img/9.png">
+
+Una vez introducidos, hacemos clic en `Connectar` y se establecerá la conexión remota con el usuario, pudiendo ver y controlar su escritorio para ayudarle.
+
+<img src="img/11.png">
+
+Aquí nos pide la contraseña que el usuario nos ha facilitado.
+
+<img src="img/10.png">
+
+Y por último podemos ver que ya estamos conectados a su ordenador.
+
+<img src="img/13.png">
+
+---
+
+## 2.2 Conexión Remota a través de la sesión
+
+También podemos conectarnos al ordenador del usuario a través de una sesión que deberemos crear desde la pestaña de `Sesiones` a la aplicación de TeamViewer dado al botón de `Nueva sesión`.
+
+<img src="img/14.png">
+
+Una vez con la sesión creada, el usuario se puede conectar por un enlace que le proporcionamos o introduciendo el código de la sesión en su aplicación de TeamViewer QuickSupport.
+
+<img src="img/15.png">
+
+Y por último ya estamos conectados al ordenador del usuario.
+
+<img src="img/16.png">
+
+---
+
+## 3. Funciones Adicionales
+
+Una vez conectados, podemos utilizar varias funciones adicionales como transferencia de archivos, chat con el usuario, reinicio remoto, entre otros.
+
+<img src="img/20.png">
+
+## 3.1 Ver información sobre el sistema del usuario (Panel)
+
+Una de las funciones es poder ver la información sobre el sistema del usuario, para ello vamos a la barra superior y al primer icono, llamado `Panel`.  
+
+Aquí podemos ver toda la información del sistema del usuario, como sistema operativo, procesador, memoria RAM, etc. Lo que es muy útil para diagnosticar problemas de su sistema.
+
+<img src="img/18.png">
+
+---
+
+## 3.2 Enviar la secuencia de teclas Ctrl+Alt+Supr
+
+El segundo icono es enviar la secuencia de teclas `Ctrl+Alt+Supr` al ordenador del usuario, que nos abrirá el gestor de tareas o la pantalla de bloqueo según el sistema operativo.
+
+---
+
+## 3.3 Transferencia de Archivos
+
+Luego tenemos la función de transferencia de archivos, que nos permite enviar o recibir archivos entre nuestro ordenador y el ordenador del usuario. Para ello vamos al tercer icono, llamado `Transferencia de archivos`.
+
+<img src="img/19.png">
+
+---
+
+## 3.4 Reinicio Remoto del Ordenador
+
+Con el cuarto icono, llamado `Reiniciar`, podemos reiniciar el ordenador del usuario de forma remota.
+
+<img src="img/20.png">
+
+---
+
+## 3.5 Función de Pizarra
+
+También tenemos la función de `Pizarra` que nos permite dibujar sobre la pantalla del usuario para indicarle dónde debe hacer clic o qué opción debe seleccionar.
+
+<img src="img/21.png">
+
+---
+
+## 4. Buenas Prácticas de Seguridad
+
+Para garantizar la seguridad durante las sesiones de asistencia remota, es importante seguir estas buenas prácticas:
+
+- Cerciorarse de que el usuario está informado y ha dado su consentimiento antes de iniciar la sesión remota.
+- No compartir las credenciales de acceso con personas no autorizadas.
+- Finalizar la sesión remota inmediatamente después de completar la asistencia.
+- Mantener el software de TeamViewer actualizado para beneficiarse de las últimas medidas de seguridad.
+
+[Volver a enunciado](README.md)
