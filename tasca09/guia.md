@@ -278,14 +278,27 @@ A continuación, el cliente solicita que la red de administración (por ejemplo,
 Para ello, tendremos que modificar el archivo /etc/exports y sustituir la línea «/srv/nfs/dev_projects *(rw,sync,no_subtree_check)» por la siguiente. 
 
 ```bash
-/srv/nfs/dev_projects 192.168.56.0/24(rw,
+/srv/nfs/dev_projects 192.168.56.0/24(rw,sync,no_subtree_check)
+/srv/nfs/dev_projects 192.168.56.140(ro,sync,no_subtree_check)
 ```
 
-![Configuració de xarxa](img/17.png)
+```bash
+systemctl restart nfs-kernel-server
+```
+
+Una vez hecho esto montamos el disco dev_projects para comprobar que funciona correctamente.
+
+El primer paso sera crearlo con la suguiente comanda
+
+```bash
+mkdir /mnt/dev_projects
+```
+
+![Configuració de xarxa](img/21.png)
 
 Una vez hecho esto, si iniciamos sesión como usuario dev01, como tenemos una dirección IP dentro del rango que puede editar archivos en la carpeta, podremos crear archivos.
 
-![Creación de archivos](img/20.png)
+![Creación de archivos](img/22.png)
 
 Cuando cambiamos la IP a ```192.168.56.140```, observamos que no podemos editar los archivos, pero sí podemos ver su contenido. Tendremos que desmontar y volver a montar la unidad.
 
