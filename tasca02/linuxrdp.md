@@ -200,10 +200,6 @@ sudo duplicity restore file:///media/backup/ /home/usuario
 
 <img src="imgg/13.png">
 
-### Hagamos una nueva copia: detecta sólo 1 archivo nuevo y hace una copia incremental.
-
-<img src="img/71.png">
-
 ---
 
 ## 9. Script de còpia automàtica
@@ -234,7 +230,7 @@ Donem permisos d’execució:
 sudo chmod +x fullbackup.sh
 ```
 
-<img src="img/72.png">
+<img src="img/18.png">
 
 ---
 
@@ -246,7 +242,7 @@ Programem el cron com a root perquè s’executi diumenges a les 23:00.
 sudo crontab -e
 ```
 
-<img src="img/73.png">
+<img src="img/16.png">
 
 ## 11. Script de còpia automàtica incremental
 
@@ -270,7 +266,7 @@ Donem permisos d’execució:
 sudo chmod +x incrementalbackup.sh
 ```
 
-<img src="img/74.png">
+<img src="img/20.png">
 
 ## 12. Programació amb CRON
 
@@ -280,4 +276,4 @@ Programem cron perquè s’executi de dilluns a dissabte a les 23:00:
 sudo crontab -e
 ```
 
-<img src="img/75.png">
+<img src="img/21.png">
