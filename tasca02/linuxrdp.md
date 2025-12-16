@@ -204,13 +204,13 @@ sudo duplicity restore file:///media/backup/ /home/usuario
 
 ## 9. Script de còpia automàtica
 
-Desmuntem la unitat del backup:
+### Desmontamos la unidad del backup:
 
 ```bash
 sudo umount /media/backup
 ```
 
-Creem l’script `fullbackup.sh`:
+### Creamos el script denominado `fullbackup.sh`:
 
 ```bash
 !/bin/bash
@@ -224,29 +224,29 @@ duplicity full /home file:///media/backup/homebackup
 umount /media/backup
 ```
 
-Donem permisos d’execució:
+### Damos permisos de ejecución:
 
 ```bash
 sudo chmod +x fullbackup.sh
 ```
 
-<img src="img/18.png">
+<img src="imgg/18.png">
 
 ---
 
 ## 10. Programació amb CRON
 
-Programem el cron com a root perquè s’executi diumenges a les 23:00.
+### Programamos el crot como root para que se ejecute a las 23:00.
 
 ```bash
 sudo crontab -e
 ```
 
-<img src="img/16.png">
+<img src="imgg/16.png">
 
-## 11. Script de còpia automàtica incremental
+## 11. Script de copia automática de forma incremental
 
-Creem l’script `incrementalbackup.sh` per a còpies incrementals:
+### Creamos el script `incrementalbackup.sh` para copias incrementales:
 
 ```bash
 !/bin/bash
@@ -260,20 +260,20 @@ duplicity incremental /home file:///media/backup/homebackup
 umount /media/backup
 ```
 
-Donem permisos d’execució:
+### Damos permisos de ejecución:
 
 ```bash
 sudo chmod +x incrementalbackup.sh
 ```
 
-<img src="img/20.png">
+<img src="imgg/20.png">
 
-## 12. Programació amb CRON
+## 12. Programación con CRON
 
-Programem cron perquè s’executi de dilluns a dissabte a les 23:00:
+### Programamos cron para que se ejecute de lunes a sábado a las 23:00:
 
 ```bash
 sudo crontab -e
 ```
 
-<img src="img/21.png">
+<img src="imgg/21.png">
