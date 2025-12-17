@@ -160,3 +160,6 @@
 ### - Mantener el software de TeamViewer actualizado para beneficiarse de las últimas medidas de seguridad.
 
 [Volver a enunciado](README.md)
+[Ir a la solución del cliente](cliente.md)
+[**Volver al proyecto**](../README.md)
+
