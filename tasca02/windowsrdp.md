@@ -186,3 +186,6 @@ Configuramos que se guarden **todas les versiones**.
 ### Comprbamos que la restauración se ha hecho con exito.
 
 <img src="img/44.png">
+
+[Volver a enunciado](README.md)
+[**Volver al proyecto**](../README.md)
