@@ -203,10 +203,6 @@ showmount -e 192.168.56.101
 
 ![comando](img/12.png)
 
-### En el que podemos v
-
-### Traducción realizada con la versión gratuita del traductor DeepL.com
-
 ---
 
 # Fase 3: La exportación de la administración (el dilema root_squash)
