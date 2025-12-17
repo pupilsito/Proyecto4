@@ -344,3 +344,6 @@ sudo nano /etc/fstab
 ### Por ejemplo, uno de los inconvenientes es que los usuarios y los grupos deben configurarse tanto en el servidor como en cada equipo cliente. Esto resulta poco eficiente, ya que en un entorno real podría haber más de 20 máquinas cliente, lo que implicaría repetir el mismo procedimiento 21 veces (20 en los clientes y una en el servidor).
 
 ### Una solución más adecuada sería centralizar la gestión de usuarios y grupos en un único sistema, como LDAP, con el fin de evitar tareas repetitivas y reducir el trabajo innecesario.
+
+[Volver a enunciado](README.md)
+[**Volver al proyecto**](../README.md)
